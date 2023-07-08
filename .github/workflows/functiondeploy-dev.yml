@@ -33,6 +33,7 @@ jobs:
           --allow-unauthenticated \
           --entry-point FanFinNotifier.Function \
           --gen2 \
+          --set-env-vars GOOGLE_CLOUD_PROJECT=alien-house-353000 \
           --region us-central1 \
           --runtime dotnet6 \
            --trigger-topic notifier-queue-dev
