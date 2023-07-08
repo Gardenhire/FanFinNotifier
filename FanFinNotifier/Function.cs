@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using FirebaseAdmin.Messaging;
+using FirebaseAdmin;
 
 namespace FanFinNotifier;
 
@@ -20,7 +21,7 @@ public class Function : ICloudEventFunction<MessagePublishedData>
 {
     public Task HandleAsync(CloudEvent cloudEvent, MessagePublishedData data, CancellationToken cancellationToken)
     {
-
+        FirebaseApp.Create();
         // Construct the message payload
         var message = new Message()
         {
