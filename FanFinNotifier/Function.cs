@@ -19,7 +19,7 @@ namespace FanFinNotifier;
 /// </summary>
 public class Function : ICloudEventFunction<MessagePublishedData>
 {
-    public Task HandleAsync(CloudEvent cloudEvent, MessagePublishedData data, CancellationToken cancellationToken)
+    public async Task HandleAsync(CloudEvent cloudEvent, MessagePublishedData data, CancellationToken cancellationToken)
     {
         FirebaseApp.Create();
         // Construct the message payload
@@ -34,10 +34,10 @@ public class Function : ICloudEventFunction<MessagePublishedData>
     };
 
         // Send the message
-        var response = FirebaseMessaging.DefaultInstance.SendAsync(message);
+        var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
         Console.WriteLine($"Successfully sent message: {response}");
 
-        return Task.CompletedTask;
+        return;
     }
 }
 
