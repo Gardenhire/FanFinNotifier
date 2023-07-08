@@ -21,7 +21,7 @@ public class Function : ICloudEventFunction<MessagePublishedData>
 {
     public async Task HandleAsync(CloudEvent cloudEvent, MessagePublishedData data, CancellationToken cancellationToken)
     {
-        FirebaseApp.Create();
+        //FirebaseApp.Create();
         // Construct the message payload
         var message = new Message()
         {
