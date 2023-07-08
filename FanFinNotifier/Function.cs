@@ -32,7 +32,7 @@ public class Function : ICloudEventFunction<MessagePublishedData>
             },
             Token = data.Message?.Attributes[AttributeConstants.NotificationToken]
     };
-
+        //test
         // Send the message
         var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
         Console.WriteLine($"Successfully sent message: {response}");
