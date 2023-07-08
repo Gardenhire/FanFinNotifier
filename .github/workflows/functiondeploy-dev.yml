@@ -1,0 +1,38 @@
+name: 'FanFin Notifier GCP Functions Deployment'
+
+on:
+  push:
+    branches: [ "develop" ]
+    
+    
+jobs:
+  job_id: 
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: 'projects/926461646290/locations/global/workloadIdentityPools/fan-fin-github-actions/providers/fanfinprovider'
+        service_account: 'fanfin-functions@alien-house-353000.iam.gserviceaccount.com'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+
+    - name: 'Use gcloud CLI'
+      run: 'gcloud info'
+      
+    - name: 'Deploy Function'
+      run: |-
+          gcloud functions deploy fan-fin-notifier-dev \
+          --allow-unauthenticated \
+          --entry-point FanFinNotifier.Function \
+          --gen2 \
+          --region us-central1 \
+          --runtime dotnet6 \
+           --trigger-topic notifier-queue-dev
