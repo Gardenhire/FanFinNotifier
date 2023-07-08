@@ -2,7 +2,7 @@ name: 'FanFin Notifier GCP Functions Deployment'
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "master" ]
     
     
 jobs:
@@ -29,11 +29,11 @@ jobs:
       
     - name: 'Deploy Function'
       run: |-
-          gcloud functions deploy fan-fin-notifier-dev \
+          gcloud functions deploy fan-fin-notifier-prod \
           --allow-unauthenticated \
           --entry-point FanFinNotifier.Function \
           --gen2 \
-          --set-env-vars GOOGLE_CLOUD_PROJECT=fin-fan---test \
+          --set-env-vars GOOGLE_CLOUD_PROJECT=alien-house-353000 \
           --region us-central1 \
           --runtime dotnet6 \
-           --trigger-topic notifier-queue-dev
+           --trigger-topic notifier-queue-prod
