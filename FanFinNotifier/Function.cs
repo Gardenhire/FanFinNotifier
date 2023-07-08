@@ -21,7 +21,8 @@ public class Function : ICloudEventFunction<MessagePublishedData>
 {
     public async Task HandleAsync(CloudEvent cloudEvent, MessagePublishedData data, CancellationToken cancellationToken)
     {
-        //FirebaseApp.Create();
+        if (FirebaseApp.DefaultInstance == null)
+            FirebaseApp.Create();
         // Construct the message payload
         var message = new Message()
         {
@@ -32,7 +33,6 @@ public class Function : ICloudEventFunction<MessagePublishedData>
             },
             Token = data.Message?.Attributes[AttributeConstants.NotificationToken]
     };
-        //test
         // Send the message
         var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
         Console.WriteLine($"Successfully sent message: {response}");
